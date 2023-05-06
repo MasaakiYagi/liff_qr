@@ -68,7 +68,7 @@ function App() {
               onScan={handleQRCodeRead}
               onError={(err) => console.error(err)}
               style={{ width: "100%", height: "auto" }}
-              facingMode={"environment"}
+              facingMode="rear"
             />
           )}
           {stationaryId && (
