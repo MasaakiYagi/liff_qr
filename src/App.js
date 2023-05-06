@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import liff from "@line/liff";
 import QRScanner from "react-qr-scanner";
+import "./App.css";
+import ConfirmationModal from "./components/modal/ConfirmationModal";
 
 const LIFF_ID = process.env.REACT_APP_LIFF_ID;
 
@@ -21,16 +23,9 @@ function App() {
     initializeLiff();
   }, []);
 
-  // useEffect(() => {
-  //   console.log(stationaryId);
-  //   handleMessageSend();
-  // }, [stationaryId]);
-
   const handleQRCodeRead = (data) => {
-    if (data && data.text !== stationaryId) {
+    if (data) {
       setStationaryId(data.text);
-      console.log(stationaryId);
-      handleMessageSend();
     }
   };
 
@@ -48,6 +43,7 @@ function App() {
   };
 
   const handleMessageSend = () => {
+    console.log(stationaryId);
     let message;
     if (mode === "purchase") {
       message = `購入\n${stationaryId}`;
@@ -64,7 +60,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>LIFF QR Code Scanner</h1>
+      <h3>商品のQRコードを読み取ってください</h3>
       {liffInitialized && (
         <>
           <QRScanner
@@ -73,6 +69,13 @@ function App() {
             style={{ width: "100%", height: "auto" }}
             facingMode={"environment"}
           />
+          {stationaryId && (
+            // <button onClick={handleMessageSend}>メッセージを送信</button>
+            <ConfirmationModal
+              stationaryId={stationaryId}
+              handleMessageSend={handleMessageSend}
+            />
+          )}
         </>
       )}
     </div>
