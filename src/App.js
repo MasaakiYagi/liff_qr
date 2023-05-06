@@ -12,18 +12,19 @@ function App() {
 
   useEffect(() => {
     const initializeLiff = async () => {
-      await liff.init({ liffId: LIFF_ID });
-      setLiffInitialized(true);
+      await liff.init({ liffId: LIFF_ID }, () => {
+        setLiffInitialized(true);
 
-      const urlParams = new URLSearchParams(window.location.search);
-      setMode(urlParams.get("mode"));
+        const urlParams = new URLSearchParams(window.location.search);
+        setMode(urlParams.get("mode"));
+      });
     };
 
     initializeLiff();
   }, []);
 
   const handleQRCodeRead = async (scanResult) => {
-    if (scanResult) {
+    if (scanResult && scanResult.value) {
       setStationaryId(scanResult.value);
       await handleMessageSend(scanResult.value);
     }
