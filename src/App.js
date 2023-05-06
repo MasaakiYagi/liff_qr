@@ -27,11 +27,11 @@ function App() {
   // }, [stationaryId]);
 
   const handleQRCodeRead = (data) => {
-    if (data) {
+    if (data && data.text !== stationaryId) {
       setStationaryId(data.text);
+      console.log(stationaryId);
+      handleMessageSend();
     }
-    console.log(stationaryId);
-    handleMessageSend();
   };
 
   const sendMessage = async (message) => {
