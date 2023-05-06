@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import liff from "@line/liff";
-import QRCodeScanner from "react-qr-scanner";
+import { QrReader } from "react-qr-reader";
 
 const LIFF_ID = process.env.REACT_APP_LIFF_ID;
 
@@ -60,8 +60,8 @@ function App() {
       <h1>LIFF QR Code Scanner</h1>
       {liffInitialized && (
         <>
-          <QRCodeScanner
-            onRead={handleQRCodeRead}
+          <QrReader
+            onScan={handleQRCodeRead}
             style={{ width: "100%", height: "auto" }}
             facingMode="environment"
           />
