@@ -94,7 +94,7 @@ function App() {
             {mode === "purchase" && (
               <button
                 className="scan-button"
-                onClick={sendMessage("支払い完了")}
+                onClick={() => sendMessage("支払い完了")}
               >
                 支払い完了
               </button>
