@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import liff from "@line/liff";
-import QRScanner from "react-qr-scanner";
+import QrReader from "react-qr-scanner";
 import "./App.css";
 import ConfirmationModal from "./components/modal/ConfirmationModal";
 
@@ -64,7 +64,7 @@ function App() {
       {liffInitialized && (
         <>
           {!stationaryId && (
-            <QRScanner
+            <QrReader
               onScan={handleQRCodeRead}
               onError={(err) => console.error(err)}
               style={{ width: "100%", height: "auto" }}
