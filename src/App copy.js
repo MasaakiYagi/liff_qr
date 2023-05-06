@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import liff from "@line/liff";
-import ConfirmationModal from "./components/modal/ConfirmationModal";
+import QrReader from "react-qr-scanner";
 import "./App.css";
+import ConfirmationModal from "./components/modal/ConfirmationModal";
 
 const LIFF_ID = process.env.REACT_APP_LIFF_ID;
 
@@ -22,10 +23,9 @@ function App() {
     initializeLiff();
   }, []);
 
-  const handleQRCodeRead = async (scanResult) => {
-    if (scanResult) {
-      setStationaryId(scanResult.value);
-      await handleMessageSend(scanResult.value);
+  const handleQRCodeRead = (data) => {
+    if (data) {
+      setStationaryId(data.text);
     }
   };
 
@@ -42,7 +42,7 @@ function App() {
     }
   };
 
-  const handleMessageSend = async (stationaryId) => {
+  const handleMessageSend = () => {
     console.log(stationaryId);
     let message;
     if (mode === "purchase") {
@@ -55,26 +55,24 @@ function App() {
       return;
     }
 
-    await sendMessage(message);
+    sendMessage(message);
   };
 
   return (
     <div className="App">
-      <h3 className="lead-message">商品のQRコードを読み取ってください</h3>
+      <h3>商品のQRコードを読み取ってください</h3>
       {liffInitialized && (
         <>
           {!stationaryId && (
-            <button
-              className="scan-button"
-              onClick={async () => {
-                const result = await liff.scanCodeV2();
-                await handleQRCodeRead(result);
-              }}
-            >
-              SCAN
-            </button>
+            <QrReader
+              onScan={handleQRCodeRead}
+              onError={(err) => console.error(err)}
+              style={{ width: "100%", height: "auto" }}
+              facingMode={"rear"}
+            />
           )}
           {stationaryId && (
+            // <button onClick={handleMessageSend}>メッセージを送信</button>
             <ConfirmationModal
               stationaryId={stationaryId}
               handleMessageSend={handleMessageSend}

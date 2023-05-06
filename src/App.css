@@ -36,3 +36,22 @@
     transform: rotate(360deg);
   }
 }
+
+.lead-message{
+  color: white;
+}
+
+.scan-button {
+  display: inline-block;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 12px 24px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0px 0px 5px 5px rgba(110,216,239,1);
+  background-color: black;
+  color: white;
+}
