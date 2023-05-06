@@ -21,10 +21,17 @@ function App() {
     initializeLiff();
   }, []);
 
+  // useEffect(() => {
+  //   console.log(stationaryId);
+  //   handleMessageSend();
+  // }, [stationaryId]);
+
   const handleQRCodeRead = (data) => {
     if (data) {
-      setStationaryId(data);
+      setStationaryId(data.text);
     }
+    console.log(stationaryId);
+    handleMessageSend();
   };
 
   const sendMessage = async (message) => {
@@ -66,9 +73,6 @@ function App() {
             style={{ width: "100%", height: "auto" }}
             facingMode={"environment"}
           />
-          {stationaryId && (
-            <button onClick={handleMessageSend}>メッセージを送信</button>
-          )}
         </>
       )}
     </div>
