@@ -63,12 +63,14 @@ function App() {
       <h3>商品のQRコードを読み取ってください</h3>
       {liffInitialized && (
         <>
-          <QRScanner
-            onScan={handleQRCodeRead}
-            onError={(err) => console.error(err)}
-            style={{ width: "100%", height: "auto" }}
-            facingMode={"environment"}
-          />
+          {!stationaryId && (
+            <QRScanner
+              onScan={handleQRCodeRead}
+              onError={(err) => console.error(err)}
+              style={{ width: "100%", height: "auto" }}
+              facingMode={"environment"}
+            />
+          )}
           {stationaryId && (
             // <button onClick={handleMessageSend}>メッセージを送信</button>
             <ConfirmationModal
