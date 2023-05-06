@@ -84,17 +84,28 @@ function App() {
       <h3 className="lead-message">商品のQRコードを読み取ってください</h3>
       {liffInitialized && (
         <>
-          {!stationaryId && (
-            <button className="scan-button" onClick={scanQRCode}>
-              SCAN
-            </button>
-          )}
-          {stationaryId && (
-            <ConfirmationModal
-              stationaryId={stationaryId}
-              handleMessageSend={handleMessageSend}
-            />
-          )}
+          <div className="scan-button-container">
+            {!stationaryId && (
+              <button className="scan-button" onClick={scanQRCode}>
+                SCAN
+              </button>
+            )}
+
+            {mode === "purchase" && (
+              <button
+                className="scan-button"
+                onClick={sendMessage("支払い完了")}
+              >
+                支払い完了
+              </button>
+            )}
+            {stationaryId && (
+              <ConfirmationModal
+                stationaryId={stationaryId}
+                handleMessageSend={handleMessageSend}
+              />
+            )}
+          </div>
         </>
       )}
       {debugMessage && <p>{debugMessage}</p>}
