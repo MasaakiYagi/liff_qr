@@ -9,15 +9,20 @@ function App() {
   const [liffInitialized, setLiffInitialized] = useState(false);
   const [mode, setMode] = useState(null);
   const [stationaryId, setStationaryId] = useState("");
+  const [debugMessage, setDebugMessage] = useState("");
 
   useEffect(() => {
     const initializeLiff = async () => {
-      await liff.init({ liffId: LIFF_ID }, () => {
+      try {
+        await liff.init({ liffId: LIFF_ID });
         setLiffInitialized(true);
 
         const urlParams = new URLSearchParams(window.location.search);
         setMode(urlParams.get("mode"));
-      });
+      } catch (error) {
+        console.error("Error initializing LIFF:", error);
+        setDebugMessage("Error initializing LIFF:" + error);
+      }
     };
 
     initializeLiff();
@@ -59,19 +64,28 @@ function App() {
     await sendMessage(message);
   };
 
+  const scanQRCode = async () => {
+    if (liffInitialized && liff.isApiAvailable("scanCodeV2")) {
+      try {
+        const result = await liff.scanCodeV2();
+        await handleQRCodeRead(result);
+      } catch (error) {
+        console.error("Error scanning QR code:", error);
+        setDebugMessage("Error scanning QR code:" + error);
+      }
+    } else {
+      console.error("scanCodeV2 API is not available.");
+      setDebugMessage("scanCodeV2 API is not available.");
+    }
+  };
+
   return (
     <div className="App">
       <h3 className="lead-message">商品のQRコードを読み取ってください</h3>
       {liffInitialized && (
         <>
           {!stationaryId && (
-            <button
-              className="scan-button"
-              onClick={async () => {
-                const result = await liff.scanCodeV2();
-                await handleQRCodeRead(result);
-              }}
-            >
+            <button className="scan-button" onClick={scanQRCode}>
               SCAN
             </button>
           )}
@@ -83,6 +97,7 @@ function App() {
           )}
         </>
       )}
+      {debugMessage && <p>{debugMessage}</p>}
     </div>
   );
 }
