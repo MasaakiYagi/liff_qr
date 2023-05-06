@@ -64,7 +64,7 @@ function App() {
             onScan={handleQRCodeRead}
             onError={(err) => console.error(err)}
             style={{ width: "100%", height: "auto" }}
-            constraints={{ facingMode: "environment" }}
+            facingMode={"environment"}
           />
           {stationaryId && (
             <button onClick={handleMessageSend}>メッセージを送信</button>
