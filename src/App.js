@@ -99,12 +99,6 @@ function App() {
                 支払い完了
               </button>
             )}
-            {stationaryId && (
-              <ConfirmationModal
-                stationaryId={stationaryId}
-                handleMessageSend={handleMessageSend}
-              />
-            )}
           </div>
         </>
       )}
