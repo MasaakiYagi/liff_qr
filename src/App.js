@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import liff from "@line/liff";
-import ConfirmationModal from "./components/modal/ConfirmationModal";
 import "./App.css";
 
 const LIFF_ID = process.env.REACT_APP_LIFF_ID;
