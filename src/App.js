@@ -43,7 +43,9 @@ function App() {
         },
       ]);
 
-      liff.closeWindow();
+      setTimeout(() => {
+        liff.closeWindow();
+      }, 500);
     }
   };
 
